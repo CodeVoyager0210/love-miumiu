@@ -33,13 +33,6 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Organize for basePath
-        run: |
-          # With basePath/assetPrefix, all paths need /love-miumiu prefix
-          # Move everything to out/love-miumiu/
-          mkdir -p out/love-miumiu
-          mv out/* out/love-miumiu/ 2>/dev/null || true
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
