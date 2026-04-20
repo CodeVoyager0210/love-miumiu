@@ -33,6 +33,17 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Setup for GitHub Pages subdirectory
+        run: |
+          # With basePath/assetPrefix=/love-miumiu, all paths have that prefix
+          # Need to organize output to: out/love-miumiu/*
+          mkdir -p out/love-miumiu
+          mv out/_next out/love-miumiu/ 2>/dev/null || true
+          mv out/*.html out/love-miumiu/ 2>/dev/null || true
+          mv out/*.txt out/love-miumiu/ 2>/dev/null || true
+          # Move images if exists
+          cp -r out/images out/love-miumiu/ 2>/dev/null || true
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
