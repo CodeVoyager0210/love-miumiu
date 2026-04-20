@@ -33,6 +33,14 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Organize for basePath
+        run: |
+          # Images are in out/images/, move them to out/love-miumiu/images/
+          mkdir -p out/love-miumiu/images
+          cp -r out/images/* out/love-miumiu/images/
+          rm -rf out/images
+          # Content already in out/ folder stays there (HTML, _next)
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
