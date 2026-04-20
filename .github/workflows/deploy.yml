@@ -35,11 +35,10 @@ jobs:
 
       - name: Organize for basePath
         run: |
-          # Images are in out/images/, move them to out/love-miumiu/images/
-          mkdir -p out/love-miumiu/images
-          cp -r out/images/* out/love-miumiu/images/
-          rm -rf out/images
-          # Content already in out/ folder stays there (HTML, _next)
+          # With basePath + assetPrefix, images and static files need /love-miumiu prefix
+          # Put everything under out/love-miumiu/
+          mkdir -p out/love-miumiu
+          mv out/* out/love-miumiu/ 2>/dev/null || true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
