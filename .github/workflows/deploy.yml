@@ -33,6 +33,13 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Organize for GitHub Pages subdirectory
+        run: |
+          # Create the subdirectory that matches basePath
+          mkdir -p out/love-miumiu
+          # Move everything to love-miumiu subfolder
+          mv out/* out/love-miumiu/ 2>/dev/null || true
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
