@@ -1,0 +1,96 @@
+将 pnpm dev 启动的纯前端项目托管到 GitHub Pages，核心步骤是将源代码**编译（Build）**成静态文件，并推送到 GitHub 仓库。
+
+以下是实现这一目标的标准流程：
+
+第一步：修改项目配置
+GitHub Pages 默认通常托管在 https://<用户名>.github.io/<仓库名>/。如果你的仓库名不是 <用户名>.github.io，你需要配置基本路径（Base Path），否则静态资源（JS/CSS）会加载失败。
+
+Vite 项目 (常用):
+在 vite.config.ts 或 vite.config.js 中添加 base 配置：
+
+JavaScript
+export default defineConfig({
+  base: './', // 或者 '/你的仓库名/'
+  // ... 其他配置
+})
+Next.js 项目:
+在 next.config.mjs 中添加：
+
+JavaScript
+const nextConfig = {
+  output: 'export', // 必须设置为导出静态文件
+  basePath: '/你的仓库名',
+};
+第二步：自动化部署 (推荐方式)
+使用 GitHub Actions 是最现代化的做法，无需手动推送编译后的代码到分支。
+
+在项目根目录创建目录：.github/workflows。
+
+在该目录下新建文件 deploy.yml，内容如下：
+
+YAML
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: "main" # 或者是你的主分支名
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build_site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Install Node.js
+        uses: actions/actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Upload Artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # 通常 Vite 默认输出到 dist，Next.js 默认输出到 out
+          path: './dist' 
+
+  deploy:
+    needs: build_site
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
+第三步：GitHub 仓库设置
+将代码推送到 GitHub 仓库。
+
+打开 GitHub 仓库页面，点击 Settings -> Pages。
+
+在 Build and deployment 下的 Source 选项中，选择 GitHub Actions。
+
+第四步：访问主页
+一旦工作流（Actions）运行完成（绿色打勾），你就可以在 https://<你的用户名>.github.io/<仓库名>/ 看到你的网页了。
+
+常见问题
+白屏问题： 通常是因为 base 路径没设对，检查浏览器控制台是否报 404 错误。
+
+路由失效： 如果你使用的是 BrowserRouter（React），刷新页面会 404。建议改用 HashRouter，或者在 public 目录下添加一个 404.html 并配合脚本重定向。
