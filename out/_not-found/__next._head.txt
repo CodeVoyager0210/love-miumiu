@@ -1,0 +1,5 @@
+1:"$Sreact.fragment"
+2:I[46608,["/love-miumiu/_next/static/chunks/0ksa_nhbs_-d0.js","/love-miumiu/_next/static/chunks/0ujy6-~qh3rio.js"],"ViewportBoundary"]
+3:I[46608,["/love-miumiu/_next/static/chunks/0ksa_nhbs_-d0.js","/love-miumiu/_next/static/chunks/0ujy6-~qh3rio.js"],"MetadataBoundary"]
+4:"$Sreact.suspense"
+0:{"rsc":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"刘浩存 — Liu Haocun | 演员"}],["$","meta","1",{"name":"description","content":"演员刘浩存的个人主页。作品、影像与时光的记录。"}],["$","meta","2",{"name":"generator","content":"v0.app"}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"YHIQ1I_deUbDAzx390Nwv"}
